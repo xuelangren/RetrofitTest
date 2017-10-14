@@ -19,22 +19,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.text);
         Retrofit retrofit = new Retrofit.Builder()
-                                         .baseUrl(Constant.BASE_URL_COOK)
+                                         .baseUrl(Constant.BASE_URL_WEATHER)
                                          .addConverterFactory(GsonConverterFactory.create())
                                          .build();
         MyServe myServe = retrofit.create(MyServe.class);
-        Call<CookModel> call = myServe.getCook(1);
-        call.enqueue(new Callback<CookModel>() {
+        Call<WeatherModel> call = myServe.getWeather();
+        call.enqueue(new Callback<WeatherModel>() {
             @Override
-            public void onResponse(Call<CookModel> call, Response<CookModel> response) {
+            public void onResponse(Call<WeatherModel> call, Response<WeatherModel> response) {
                 if(response.isSuccessful()){
-                     textView.setText(response.body().getResult().getData().get(1).getTitle());
+                     textView.setText(response.body().getResult().toString());
                     Toast.makeText(MainActivity.this,"aaaaaa",Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<CookModel> call, Throwable t) {
+            public void onFailure(Call<WeatherModel> call, Throwable t) {
 
             }
         });
